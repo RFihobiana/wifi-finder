@@ -40,7 +40,7 @@ def get_wifi_networks() -> list[dict[str, int]]:
 
     return [ {'ESSID': essid, 'signal': int(signal)} for (essid, signal) in zip(essids, signals) ] # Return wifi list
 
-def get_strongest_wifi() -> dict[str, int]:
+def find_strongest_wifi() -> dict[str, int]:
     '''
     Gets strongest wifi singal around
 
@@ -48,7 +48,11 @@ def get_strongest_wifi() -> dict[str, int]:
     '''
     networks = get_wifi_networks()
     if not networks: return
-    return max(networks, key=lambda net: -net['signal'])
+    return max(networks, key=lambda net: -net['signal']) # the most negative signal is the strongest network
 
-
+if __name__ == '__main__':
+    strongest_wifi = find_strongest_wifi()
+    if strongest_wifi is not None:
+        print(f'Strongest Wifi Network: {strongest_wifi['ESSID']} ({strongest_wifi['signal']})')
+    else: print('No Wifi Network found.')
 
