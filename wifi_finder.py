@@ -53,6 +53,6 @@ def find_strongest_wifi() -> dict[str, int]:
 if __name__ == '__main__':
     strongest_wifi = find_strongest_wifi()
     if strongest_wifi is not None:
-        print(f'Strongest Wifi Network: {strongest_wifi['ESSID']} ({strongest_wifi['signal']})')
+        print(f'Strongest Wifi Network: {strongest_wifi["ESSID"]} ({strongest_wifi["signal"]})')
     else: print('No Wifi Network found.')
 
