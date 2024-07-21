@@ -10,7 +10,7 @@ import re
 import sys
 import subprocess
 
-def get_wifi_networks() -> list[dict[str, str]]:
+def get_wifi_networks() -> list[dict[str, int]]:
     '''
     Gets every wifi your computer can hear around you
     
@@ -38,5 +38,17 @@ def get_wifi_networks() -> list[dict[str, str]]:
     essids = essid_regex.findall(networks)
     signals = signal_regex.findall(networks)
 
-    return [ {'ESSID': essid, 'signal': signal} for (essid, signal) in zip(essids, signals) ] # Return wifi list
+    return [ {'ESSID': essid, 'signal': int(signal)} for (essid, signal) in zip(essids, signals) ] # Return wifi list
+
+def get_strongest_wifi() -> dict[str, int]:
+    '''
+    Gets strongest wifi singal around
+
+    Return: Strongest wifi (with its signal). None if there is no wifi
+    '''
+    networks = get_wifi_networks()
+    if not networks: return
+    return max(networks, key=lambda net: -net['signal'])
+
+
 
