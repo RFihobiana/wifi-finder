@@ -9,6 +9,7 @@ Before using this, make sure you have:
 import re
 import sys
 import subprocess
+import time
 
 def get_wifi_networks() -> list[dict[str, int]]:
     '''
@@ -51,8 +52,15 @@ def find_strongest_wifi() -> dict[str, int]:
     return max(networks, key=lambda net: -net['signal']) # the most negative signal is the strongest network
 
 if __name__ == '__main__':
-    strongest_wifi = find_strongest_wifi()
-    if strongest_wifi is not None:
-        print(f'Strongest Wifi Network: {strongest_wifi["ESSID"]} ({strongest_wifi["signal"]})')
-    else: print('No Wifi Network found.')
+    print('Press Ctrl-c to exit')
+    try:
+        while True:
+            strongest_wifi = find_strongest_wifi()
+            if strongest_wifi is not None:
+                        print(f'\rStrongest Wifi Network: {strongest_wifi["ESSID"]} ({strongest_wifi["signal"]})', end='')
+            else: print('\rNo Wifi Network found.', end='')
+            time.sleep(.4)
+    except KeyboardInterrupt:
+        print()
+
 
